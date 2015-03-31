@@ -1,0 +1,108 @@
+﻿@{
+    ViewBag.Title = "Busca de Alunos";
+}
+
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('input').keydown(function (e) {
+            if (e.keyCode == 13) {
+                localizarAluno();
+            }
+        });
+    });
+
+    function listarTop10() {
+        $("#result").empty();
+        var strMethodUrl = '@Url.Action("List", "LocalizacaoAlunos")';
+        $.getJSON(strMethodUrl, receieveResponse);
+    }
+
+    function localizarAluno() {
+        $("#result").empty();
+        var strMethodUrl = '@Url.Action("Find", "LocalizacaoAlunos")?id='+$("#matricula").val();
+            $.getJSON(strMethodUrl, receieveResponse);
+        }
+
+
+        function receieveResponse(response) {
+            
+            if (response != null && response != "Registro não encontrado!" && !response.indexOf('*')) {
+                carregarNoMapa(response)
+            } else {
+                if (response.indexOf('*') && response != "Registro não encontrado!") {
+                    var dados = response.split("*");
+
+                    for (var i = 0; i <= dados.length ; i++) {
+                        carregarNoMapa(dados[i]);
+                    }
+                }
+                else {
+                    $("#result").append(response);
+                }
+            }
+        }
+
+        var map;
+        function initialize() {
+            var mapOptions = {
+                zoom: 10,
+                center: new google.maps.LatLng(-34.397, 150.644)
+            };
+            map = new google.maps.Map(document.getElementById('map-canvas'),
+                mapOptions);
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+
+        function carregarNoMapa(aluno) {
+            
+            var geocoder = new google.maps.Geocoder();
+            var mapOptions = {
+                zoom: 15
+            }
+
+            var matricula = aluno.split(';')[0];
+            var nome = aluno.split(';')[1];
+            var endereco = aluno.split(';')[2];
+            
+            map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+            var position = geocoder.geocode({ 'address': endereco },
+                function (results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        if (status != google.maps.GeocoderStatus.ZERO_RESULTS) {
+                            map.setCenter(results[0].geometry.location);
+
+                            var marker = new google.maps.Marker({ map: map, position: results[0].geometry.location });
+
+                            var iw = new google.maps.InfoWindow({
+                                content: "Aluno: " + nome + " - " + matricula
+                            });
+                            google.maps.event.addListener(marker, "mouseover", function (e) { iw.open(map, marker); });
+                        }
+                    }
+                }
+            )
+        }
+</script>
+
+<div id="body-content">
+    <div class="form-group">
+        <div id="input-editor">
+            @Html.Label("Matricula")
+        </div>
+        <div class="input-group">
+            @Html.TextBox("matricula")
+            <button type="button" class="input-group-btn" onclick="localizarAluno()" title="Pesquisar Aluno" style="cursor:progress;"><span class="glyphicon glyphicon-search"></span></button>
+            <button type="button" class="input-group-btn" onclick="listarTop10()" title="Listar os 10 últimos pesquisados" style="cursor:progress;"><span class="glyphicon glyphicon-th-list"></span></button>
+        </div>  
+        <div id="result"></div>     
+    </div>
+    <div id="map-canvas"></div>
+</div>

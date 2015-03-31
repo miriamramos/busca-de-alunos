@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.22310.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "busca-de-alunos", "busca-de-alunos\busca-de-alunos.csproj", "{3CC35569-88E8-40EC-B585-ADD9C7F51672}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "busca-de-alunos.Tests", "busca-de-alunos.Tests\busca-de-alunos.Tests.csproj", "{C3D4D652-E194-4FD9-904E-6F26F0E04772}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3CC35569-88E8-40EC-B585-ADD9C7F51672}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CC35569-88E8-40EC-B585-ADD9C7F51672}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CC35569-88E8-40EC-B585-ADD9C7F51672}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CC35569-88E8-40EC-B585-ADD9C7F51672}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3D4D652-E194-4FD9-904E-6F26F0E04772}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3D4D652-E194-4FD9-904E-6F26F0E04772}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3D4D652-E194-4FD9-904E-6F26F0E04772}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3D4D652-E194-4FD9-904E-6F26F0E04772}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

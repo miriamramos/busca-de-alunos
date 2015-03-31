@@ -1,0 +1,45 @@
+﻿@model IEnumerable<busca_de_alunos.Models.LocalizacaoAluno>
+
+@{
+    ViewBag.Title = "Listar Alunos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Alunos</h2>
+
+<p>
+    @Html.ActionLink("Cadastrar", "Create", "LocalizacaoAlunos", null, new {@class="btn btn-primary" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Matricula)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Endereco)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Matricula)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Endereco) 
+        </td>
+        <td>
+            @Html.ActionLink(" ", "Edit",null,new { id = item.Matricula }, new { @class= "btn btn-default btn-sm active glyphicon glyphicon-edit", title = "Editar" })
+            @Ajax.ActionLink(" ", "Delete", null, new { id = item.Matricula }, new AjaxOptions() { Confirm ="Deseja realmente excluir o registro? Esta operação não poderá ser desfeita.", OnComplete = "deleteComplete", HttpMethod = "DELETE" }, new { @class = "btn btn-default btn-sm active glyphicon glyphicon-remove", title = "Excluir" })
+        </td>
+    </tr>
+}
+
+</table>
